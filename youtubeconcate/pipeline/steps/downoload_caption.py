@@ -8,15 +8,26 @@ from pytube import YouTube
 
 class DownloadCaption(Step):
     def process(self, data, inputs, utils):
-        print(data)
         for url in data:
-            source = YouTube(url)
-            en_caption = source.captions.get_by_language_code('a.en')
-            en_caption_convert_to_srt = (en_caption.generate_srt_captions())
-            print(en_caption_convert_to_srt)
-            text_file = open(utils.get_captions_path(url), "w")
+            print('downloading captions for ', url)
+            if utils.caption_file_exists(url):
+                print("pass this video")
+                continue
+            else:
+                print("i dont find it")
+            try:
+                source = YouTube(url)
+                en_caption = source.captions.get_by_language_code('a.en')
+                en_caption_convert_to_srt = (en_caption.generate_srt_captions())
+                # print(en_caption_convert_to_srt)
+            except AttributeError:
+                print("AttributeError for ", url)
+                continue
+
+            text_file = open(utils.get_captions_path(url), "w", encoding='utf-8')
             text_file.write(en_caption_convert_to_srt)
             text_file.close()
-            break
+
+
 
 

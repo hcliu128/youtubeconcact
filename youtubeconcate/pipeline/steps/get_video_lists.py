@@ -9,6 +9,9 @@ class GetVideoLists(Step):
         channel_id = (inputs['channel_id'])
         api_key = API_KEY
 
+        if utils.video_list_file_exists(channel_id):
+            print("Found existng video list for channel id ", channel_id)
+            return self.read_file(utils.get_video_list_path(channel_id))
         base_video_url = 'https://www.youtube.com/watch?v='
         base_search_url = 'https://www.googleapis.com/youtube/v3/search?'
 
@@ -29,5 +32,20 @@ class GetVideoLists(Step):
                 url = first_url + '&pageToken={}'.format(next_page_token)
             except KeyError:
                 break
+        self.write_to_file(video_links, utils.get_video_list_path(channel_id))
         return video_links
+
+
+    def write_to_file(self, video_links, filepath):
+        with open (filepath, 'w') as f:
+            for url in video_links:
+                f.write(url+'\n')
+
+    def read_file(self, filepath):
+        video_links=[]
+        with open (filepath, 'r') as f:
+            for url in f:
+                video_links.append(url.strip())
+        return video_links
+
 
