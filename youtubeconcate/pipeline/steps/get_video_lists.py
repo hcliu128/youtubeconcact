@@ -5,7 +5,7 @@ from youtubeconcate.pipeline.steps.step import Step
 
 
 class GetVideoLists(Step):
-    def process(self, data, inputs):
+    def process(self, data, inputs, utils):
         channel_id = (inputs['channel_id'])
         api_key = API_KEY
 
@@ -29,5 +29,5 @@ class GetVideoLists(Step):
                 url = first_url + '&pageToken={}'.format(next_page_token)
             except KeyError:
                 break
-        # print(video_links)
         return video_links
+

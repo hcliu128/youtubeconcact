@@ -1,16 +1,24 @@
 from youtubeconcate.pipeline.steps.get_video_lists import GetVideoLists
+from youtubeconcate.pipeline.steps.downoload_caption import DownloadCaption
 from youtubeconcate.pipeline.pipeline import Pipeline
+from youtubeconcate.utils import Utils
+from youtubeconcate.Preflight import Preflight
+from youtubeconcate.Postflight import Postflight
 inputs = {
-    "channel_id": "UCQ6dAn-1lkPAnYmP4fnRNAg"
+    "channel_id": "UC-lHJZR3Gqxm24_Vd_AJ5Yw"
 }
 
 
 def main():
     steps = [
+        Preflight(),
         GetVideoLists(),
+        DownloadCaption(),
+        Postflight(),
     ]
+    utils = Utils()
     p = Pipeline(steps)
-    p.run(inputs)
+    p.run(inputs, utils)
 
 
 if __name__ == "__main__":
@@ -21,6 +29,4 @@ if __name__ == "__main__":
 
 
 
-# print(get_all_video_in_channel("UCQ6dAn-1lkPAnYmP4fnRNAg"))
-# print(len(get_all_video_in_channel("UCQ6dAn-1lkPAnYmP4fnRNAg")))
-# print(API_KEY)
+
