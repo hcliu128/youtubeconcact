@@ -1,5 +1,6 @@
 from youtubeconcate.pipeline.steps.get_video_lists import GetVideoLists
 from youtubeconcate.pipeline.steps.downoload_caption import DownloadCaption
+from youtubeconcate.pipeline.steps.read_captions import ReadCaptions
 from youtubeconcate.pipeline.pipeline import Pipeline
 from youtubeconcate.utils import Utils
 from youtubeconcate.Preflight import Preflight
@@ -14,6 +15,7 @@ def main():
         Preflight(),
         GetVideoLists(),
         DownloadCaption(),
+        ReadCaptions(),
         Postflight(),
     ]
     utils = Utils()
