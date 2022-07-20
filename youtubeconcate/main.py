@@ -1,12 +1,15 @@
 from youtubeconcate.pipeline.steps.get_video_lists import GetVideoLists
 from youtubeconcate.pipeline.steps.downoload_caption import DownloadCaption
 from youtubeconcate.pipeline.steps.read_captions import ReadCaptions
+from youtubeconcate.pipeline.steps.initialize_yt import InitializeYT
+from youtubeconcate.pipeline.steps.search import Search
 from youtubeconcate.pipeline.pipeline import Pipeline
 from youtubeconcate.utils import Utils
 from youtubeconcate.Preflight import Preflight
 from youtubeconcate.Postflight import Postflight
 inputs = {
-    "channel_id": "UC-lHJZR3Gqxm24_Vd_AJ5Yw"
+    "channel_id": "UC-lHJZR3Gqxm24_Vd_AJ5Yw",
+    "term": "entire face",
 }
 
 
@@ -14,8 +17,10 @@ def main():
     steps = [
         Preflight(),
         GetVideoLists(),
+        InitializeYT(),
         DownloadCaption(),
         ReadCaptions(),
+        Search(),
         Postflight(),
     ]
     utils = Utils()

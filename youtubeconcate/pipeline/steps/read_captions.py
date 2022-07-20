@@ -6,10 +6,11 @@ from youtubeconcate.settings import CAP_DIR
 
 class ReadCaptions(Step):
     def process(self, data, inputs, utils):
-        data = {}
-        for caption_file in os.listdir(CAP_DIR):
+        for yt in data:
+            if not utils.caption_file_exists(yt):
+                continue
             captions = {}
-            with open(os.path.join(CAP_DIR, caption_file), 'r', encoding='utf-8') as f:
+            with open(yt.caption_path, 'r', encoding='utf-8') as f:
                 time_line = False
                 caption = None
                 time = None
@@ -22,8 +23,9 @@ class ReadCaptions(Step):
                         caption = line.strip()
                         captions[caption] = time
                         time_line = False
-            data [caption_file] = captions
-        pprint(data)
+            yt.captions = captions
+            pprint(data)
+            # print(yt.captions)
         return data
 
 
