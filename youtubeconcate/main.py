@@ -3,6 +3,7 @@ from youtubeconcate.pipeline.steps.downoload_caption import DownloadCaption
 from youtubeconcate.pipeline.steps.read_captions import ReadCaptions
 from youtubeconcate.pipeline.steps.initialize_yt import InitializeYT
 from youtubeconcate.pipeline.steps.search import Search
+from youtubeconcate.pipeline.steps.download_video import DownloadVideo
 from youtubeconcate.pipeline.pipeline import Pipeline
 from youtubeconcate.utils import Utils
 from youtubeconcate.Preflight import Preflight
@@ -21,6 +22,7 @@ def main():
         DownloadCaption(),
         ReadCaptions(),
         Search(),
+        DownloadVideo(),
         Postflight(),
     ]
     utils = Utils()
